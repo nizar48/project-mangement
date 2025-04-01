@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { KanbanSquare, Plus, Search, Settings, ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import { ChevronLeft, ChevronRight, KanbanSquare, Plus } from 'lucide-vue-next'
 import { useIssueStore } from '../stores/issueStore'
 import KanbanBoard from './KanbanBoard.vue'
 import AddIssueModal from './AddIssueModal.vue'
@@ -10,7 +10,7 @@ const isHovered = ref(false)
 const showModal = ref(false)
 
 
-const issueStore = useIssueStore()
+// const issueStore = useIssueStore()
 
 const toggleModal = () => {
   showModal.value = !showModal.value

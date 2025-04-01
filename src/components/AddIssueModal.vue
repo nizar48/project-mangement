@@ -29,7 +29,7 @@ const handleSubmit = () => {
       .split(',')
       .map((a) => a.trim())
       .filter((a) => a)
-  
+
   issueStore.addIssue({
     id: Date.now(),
     type: newIssue.value.type,
@@ -63,7 +63,7 @@ const closeModal = () => {
 
 <template>
   <Teleport to="body">
-    <div v-if="show" class="fixed inset-0 z-50 flex items-center justify-center">
+    <div v-if="props.show" class="fixed inset-0 z-50 flex items-center justify-center">
       <!-- Semi-transparent overlay -->
       <div class="absolute inset-0 backdrop-blur-sm" @click="closeModal"></div>
 

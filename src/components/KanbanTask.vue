@@ -4,15 +4,14 @@ import type { Task } from '../stores/issueStore.ts'
 import { useIssueStore } from '../stores/issueStore'
 import {
   AlertCircle,
+  Bug,
   CheckCircle2,
   CircleDot,
-  Flag,
-  Bug,
-  Sparkles,
   Clipboard,
-  Layers,
   Edit,
-  X,
+  Flag,
+  Layers,
+  Sparkles,
   Trash2
 } from 'lucide-vue-next'
 import EditIssueModal from "./EditIssueModal.vue";
