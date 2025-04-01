@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { ChevronLeft, ChevronRight, KanbanSquare, Plus } from 'lucide-vue-next'
-import { useIssueStore } from '../stores/issueStore'
 import KanbanBoard from './KanbanBoard.vue'
 import AddIssueModal from './AddIssueModal.vue'
 
