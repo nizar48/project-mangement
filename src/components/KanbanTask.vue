@@ -1,6 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { Task } from '../stores/issueStore.ts'
+import { useIssueStore } from '../stores/issueStore'
+import {
+  AlertCircle,
+  CheckCircle2,
+  CircleDot,
+  Flag,
+  Bug,
+  Sparkles,
+  Clipboard,
+  Layers,
+  Edit,
+  X,
+  Trash2
+} from 'lucide-vue-next'
+import EditIssueModal from "./EditIssueModal.vue";
 
 interface Props {
   task: Task
@@ -12,10 +27,39 @@ const emit = defineEmits(['drag-start'])
 
 // card state if details are shown or not
 const showDetails = ref(false)
+const issueStore = useIssueStore()
+const showEditModal = ref(false)
 
 // toggle task details
 const toggleDetails = () => {
   showDetails.value = !showDetails.value
+}
+
+const deleteTask = () => {
+  issueStore.deleteTask(props.task.id, props.columnId.toString())
+}
+
+const editTask = () => {
+  showEditModal.value = true
+}
+
+const closeEditModal = () => {
+  showEditModal.value = false
+}
+
+const getPriorityIcon = (priority: string) => {
+  switch (priority.toLowerCase()) {
+    case 'low':
+      return CircleDot
+    case 'medium':
+      return CheckCircle2
+    case 'high':
+      return Flag
+    case 'critical':
+      return AlertCircle
+    default:
+      return CircleDot
+  }
 }
 
 const getPriorityColor = (priority: string) => {
@@ -30,6 +74,21 @@ const getPriorityColor = (priority: string) => {
       return 'bg-red-100 text-red-800'
     default:
       return 'bg-gray-100 text-gray-800'
+  }
+}
+
+const getTypeIcon = (type: string) => {
+  switch (type.toLowerCase()) {
+    case 'bug':
+      return Bug
+    case 'feature':
+      return Sparkles
+    case 'task':
+      return Clipboard
+    case 'epic':
+      return Layers
+    default:
+      return Clipboard
   }
 }
 
@@ -65,24 +124,31 @@ const onDragStart = (event: DragEvent) => {
       class="mb-2 cursor-grab rounded-md border border-gray-200 bg-white p-3 shadow-sm transition-shadow hover:shadow-md"
       draggable="true"
       @dragstart="onDragStart"
-      @click="toggleDetails"
   >
     <div class="mb-2 flex items-center justify-between">
-      <span :class="['rounded-md px-2 py-0.5 text-xs font-medium', getTypeColor(task.type)]">
-        {{ task.type }}
-      </span>
-      <span :class="['rounded-md px-2 py-0.5 text-xs font-medium', getPriorityColor(task.priority)]">
-        {{ task.priority }}
-      </span>
+      <div @click="toggleDetails" class="flex items-center">
+        <span :class="['rounded-md px-2 py-0.5 text-xs font-medium flex items-center gap-1', getTypeColor(task.type)]">
+          <component :is="getTypeIcon(task.type)" class="h-3.5 w-3.5"/>
+          {{ task.type }}
+        </span>
+      </div>
+      <div @click="toggleDetails" class="flex items-center">
+        <span
+            :class="['rounded-md px-2 py-0.5 text-xs font-medium flex items-center gap-1', getPriorityColor(task.priority)]">
+          <component :is="getPriorityIcon(task.priority)" class="h-3.5 w-3.5"/>
+          {{ task.priority }}
+        </span>
+      </div>
     </div>
 
-    <h4 class="mb-2 text-sm font-medium text-gray-800">{{ task.title }}</h4>
+    <h4 @click="toggleDetails" class="mb-2 text-sm font-medium text-gray-800">{{ task.title }}</h4>
 
-    <p v-if="task.description && !showDetails" class="mb-3 text-xs text-gray-600">
+    <p v-if="task.description && !showDetails" @click="toggleDetails" class="mb-3 text-xs text-gray-600">
       {{ task.description.length > 100 ? `${ task.description.substring(0, 100) }...` : task.description }}
     </p>
 
-    <div v-if="!showDetails" class="mt-2 flex flex-col flex-wrap items-start gap-2 text-xs text-gray-600">
+    <div v-if="!showDetails" @click="toggleDetails"
+         class="mt-2 flex flex-col flex-wrap items-start gap-2 text-xs text-gray-600">
       <div><span class="font-medium">Reporter:</span> {{ task.reporter }}</div>
       <div v-if="task.assignees.length" class="flex items-center gap-1">
         <span class="font-medium">Assignees:</span>
@@ -107,6 +173,16 @@ const onDragStart = (event: DragEvent) => {
     </div>
 
     <div v-if="showDetails" class="mt-3 border-t border-gray-200 pt-3">
+      <!-- Action buttons -->
+      <div class="mb-3 flex justify-end gap-2">
+        <button @click="editTask" class="rounded p-1 text-gray-500 hover:bg-gray-100" title="Edit">
+          <Edit class="h-4 w-4"/>
+        </button>
+        <button @click="deleteTask" class="rounded p-1 text-gray-500 hover:bg-gray-100" title="Delete">
+          <Trash2 class="h-4 w-4"/>
+        </button>
+      </div>
+
       <div v-if="task.description" class="mb-3">
         <h5 class="mb-1 text-xs font-medium text-gray-500">Description</h5>
         <p class="text-sm text-gray-700">{{ task.description }}</p>
@@ -121,7 +197,7 @@ const onDragStart = (event: DragEvent) => {
           <span class="text-sm">{{ task.reporter }}</span>
         </div>
       </div>
-      
+
       <div>
         <h5 class="mb-1 text-xs font-medium text-gray-500">Assignees</h5>
         <div class="flex flex-wrap gap-1">
@@ -135,4 +211,13 @@ const onDragStart = (event: DragEvent) => {
       </div>
     </div>
   </div>
+
+  <!-- Edit Issue Modal -->
+  <EditIssueModal
+      v-if="showEditModal"
+      :show="showEditModal"
+      :task="task"
+      :column-id="columnId"
+      @close="closeEditModal"
+  />
 </template>

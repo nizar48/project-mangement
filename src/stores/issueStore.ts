@@ -132,7 +132,7 @@ export const useIssueStore = defineStore('issues', () => {
             backlogColumn.tasks.push(issue)
         }
     }
-    
+
     function moveTask({
                           taskId,
                           sourceColumnId,
@@ -165,9 +165,31 @@ export const useIssueStore = defineStore('issues', () => {
         }
     }
 
+    function deleteTask(taskId: number, columnId: string) {
+        const columnIndex = columns.findIndex((col) => col.id === columnId)
+        if (columnIndex === -1) return
+
+        const taskIndex = columns[columnIndex].tasks.findIndex((task) => task.id === taskId)
+        if (taskIndex === -1) return
+
+        columns[columnIndex].tasks.splice(taskIndex, 1)
+    }
+
+    function updateTask({id, columnId, updatedTask}: { id: number, columnId: string, updatedTask: Task }) {
+        const columnIndex = columns.findIndex((col) => col.id === columnId)
+        if (columnIndex === -1) return
+
+        const taskIndex = columns[columnIndex].tasks.findIndex((task) => task.id === id)
+        if (taskIndex === -1) return
+
+        columns[columnIndex].tasks[taskIndex] = updatedTask
+    }
+
     return {
         columns,
         addIssue,
         moveTask,
+        deleteTask,
+        updateTask
     }
 })
