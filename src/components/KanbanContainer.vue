@@ -30,9 +30,9 @@ const toggleModal = () => {
         <button class="cursor-pointer rounded-md p-2 hover:bg-green-700" title="Add Issue" @click="toggleModal">
           <Plus class="h-5 w-5 text-white"/>
         </button>
-        <button class="cursor-pointer rounded-md p-2 hover:bg-green-700" title="Search">
-          <Search class="h-5 w-5 text-white"/>
-        </button>
+        <!--        <button class="cursor-pointer rounded-md p-2 hover:bg-green-700" title="Search">-->
+        <!--          <Search class="h-5 w-5 text-white"/>-->
+        <!--        </button>-->
       </div>
       <div class="mt-auto mb-4">
         <span
@@ -75,10 +75,11 @@ const toggleModal = () => {
           </button>
         </div>
         <nav class="flex-1 space-y-2 p-4">
-          <button class="flex w-full items-center gap-2 rounded-md p-2 hover:bg-gray-200">
+          <RouterLink to="/" class="flex w-full items-center gap-2 rounded-md p-2 hover:bg-gray-200"
+                      active-class="bg-gray-100">
             <KanbanSquare class="h-5 w-5 text-gray-600"/>
             <span class="text-gray-700">Kanban Board</span>
-          </button>
+          </RouterLink>
           <!--          <button class="flex w-full items-center gap-2 rounded-md p-2 hover:bg-gray-200">-->
           <!--            <Settings class="h-5 w-5 text-gray-600" />-->
           <!--            <span class="text-gray-700">Project Settings</span>-->
@@ -105,7 +106,7 @@ const toggleModal = () => {
     <div class="flex-1 overflow-hidden">
       <KanbanBoard/>
     </div>
-    
+
     <AddIssueModal :show="showModal" @close="showModal = false"/>
   </div>
 </template>
