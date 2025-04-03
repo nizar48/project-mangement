@@ -1,6 +1,6 @@
 <template>
-  <div class="flex">
-    <KanbanContainer/>
+  <div class="flex bg-gray-100">
+    <KanbanContainer />
   </div>
 </template>
 

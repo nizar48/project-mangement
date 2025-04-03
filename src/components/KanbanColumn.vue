@@ -38,19 +38,19 @@ const onDrop = (event: DragEvent) => {
   const position = props.column.tasks.length
 
 
-  emit('task-moved', {taskId, sourceColumnId, targetColumnId, position})
+  emit('task-moved', { taskId, sourceColumnId, targetColumnId, position })
 }
 </script>
 
 <template>
   <div
-      :class="[
+    :class="[
       'flex h-full flex-col overflow-y-auto rounded-lg border bg-gray-50 p-3 shadow-sm',
       isDraggingOver ? 'border-green-500 bg-green-50' : 'border-gray-200',
     ]"
-      @dragover="onDragOver"
-      @dragleave="onDragLeave"
-      @drop="onDrop"
+    @dragover="onDragOver"
+    @dragleave="onDragLeave"
+    @drop="onDrop"
   >
     <!-- col header -->
     <div class="flex items-center justify-between pb-2">
@@ -62,7 +62,7 @@ const onDrop = (event: DragEvent) => {
 
     <!-- task list -->
     <div class="flex-1 overflow-y-auto">
-      <KanbanTask v-for="task in column.tasks" :key="task.id" :task="task" :column-id="column.id"/>
+      <KanbanTask v-for="task in column.tasks" :key="task.id" :task="task" :column-id="column.id" />
     </div>
   </div>
 </template>
