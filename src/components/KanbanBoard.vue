@@ -28,7 +28,7 @@ const handleTaskMoved = ({
 <template>
   <div class="flex h-screen">
     <div class="flex-1 overflow-x-auto p-6">
-      <div class="relative w-96 mb-4">
+      <div class="relative md:w-[49.3%] xl:w-[24.3%] mb-4">
         <Search
           class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 focus:border-green-500 focus:outline-none h-5 w-5" />
         <input
