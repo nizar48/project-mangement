@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ChevronLeft, ChevronRight, KanbanSquare, Plus } from 'lucide-vue-next'
-import KanbanBoard from './KanbanBoard.vue'
+import { ChevronLeft, ChevronRight, KanbanSquare, Plus, Settings } from 'lucide-vue-next'
 import AddIssueModal from './AddIssueModal.vue'
 
 const isExpanded = ref(true)
@@ -79,6 +78,11 @@ const toggleModal = () => {
             <KanbanSquare class="h-5 w-5 text-gray-600" />
             <span class="text-gray-700">Kanban Board</span>
           </RouterLink>
+          <RouterLink to="/settings" class="flex w-full items-center gap-2 rounded-md p-2 hover:bg-gray-200"
+                      active-class="bg-gray-100">
+            <Settings class="h-5 w-5 text-gray-600" />
+            <span class="text-gray-700">Project Settings</span>
+          </RouterLink>
           <!--          <button class="flex w-full items-center gap-2 rounded-md p-2 hover:bg-gray-200">-->
           <!--            <Settings class="h-5 w-5 text-gray-600" />-->
           <!--            <span class="text-gray-700">Project Settings</span>-->
@@ -104,7 +108,8 @@ const toggleModal = () => {
 
     <!-- main content -->
     <div class="flex-1 overflow-hidden w-full">
-      <KanbanBoard />
+      <!--      <KanbanBoard />-->
+      <router-view />
     </div>
 
     <AddIssueModal :show="showModal" @close="showModal = false" />
