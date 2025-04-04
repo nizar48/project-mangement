@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { ChevronLeft, ChevronRight, KanbanSquare, Plus, Settings } from 'lucide-vue-next'
 import AddIssueModal from './AddIssueModal.vue'
+import { useSettingsStore } from '../stores/settingsStore.ts'
 
 const isExpanded = ref(true)
 const isHovered = ref(false)
@@ -9,7 +10,7 @@ const showModal = ref(false)
 
 
 // const issueStore = useIssueStore()
-
+const settingsStore = useSettingsStore()
 const toggleModal = () => {
   showModal.value = !showModal.value
 }
@@ -53,10 +54,12 @@ const toggleModal = () => {
       <div class="flex h-full flex-col">
         <div class="relative flex items-center px-4 pt-4">
           <div class="flex items-center gap-3">
-            <div class="flex h-8 w-8 items-center justify-center rounded bg-slate-900 font-bold text-white">A</div>
+            <div class="flex h-8 w-8 items-center justify-center rounded bg-slate-900 font-bold text-white">
+              {{ settingsStore.projectName.charAt(0).toUpperCase() }}
+            </div>
             <div>
-              <h3 class="font-medium text-gray-800">Project Alpha</h3>
-              <p class="text-xs text-gray-500">Software Project</p>
+              <h3 class="font-medium text-gray-800">{{ settingsStore.projectName }}</h3>
+              <p class="text-xs text-gray-500">{{ settingsStore.projectType }}</p>
             </div>
           </div>
 
