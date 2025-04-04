@@ -16,9 +16,9 @@ const toggleModal = () => {
 </script>
 
 <template>
-  <div class="flex h-screen bg-gray-100">
+  <div class="flex h-screen bg-gray-100 w-full">
     <!-- main sidebqr -->
-    <div class="flex h-full w-16 flex-col items-center border-r border-r-gray-300 bg-green-800 py-4 shadow">
+    <div class="flex h-full w-10 px-8 flex-col items-center border-r border-r-gray-300 bg-green-800 py-4 shadow">
       <div class="mb-8">
         <div class="flex h-10 w-10 items-center justify-center p-1">
           <img src="/jira-logo.svg" alt="logo" />
@@ -43,7 +43,7 @@ const toggleModal = () => {
     <!-- collapsible sidebar -->
     <div
       :class="[
-        'group relative bg-gray-50 shadow transition-all duration-300',
+        'group relative bg-gray-50 shadow transition-all duration-300 max-w-54',
         isExpanded ? 'w-64' : 'w-4 overflow-hidden',
         isHovered ? 'border-r-2 border-green-800' : 'border-r-2 border-transparent',
       ]"
@@ -107,11 +107,9 @@ const toggleModal = () => {
     </div>
 
     <!-- main content -->
-    <div class="flex-1 overflow-hidden w-full">
-      <!--      <KanbanBoard />-->
-      <router-view />
-    </div>
 
+    <!--      <KanbanBoard />-->
+    <router-view />
     <AddIssueModal :show="showModal" @close="showModal = false" />
   </div>
 </template>
